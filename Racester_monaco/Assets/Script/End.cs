@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class End : MonoBehaviour
 {
-    private Voiture voiture;
+    private Cars voiture;
     private GameObject[] checkpoints;
     // Start is called before the first frame update
     void Start()
     {
-        voiture = GameObject.FindGameObjectWithTag("Voiture").GetComponent<Voiture>();
+        voiture = GameObject.FindGameObjectWithTag("Voiture").GetComponent<Cars>();
         checkpoints = GameObject.FindGameObjectsWithTag("Checkpoint");
     }
 

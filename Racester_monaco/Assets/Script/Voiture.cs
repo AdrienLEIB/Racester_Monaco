@@ -18,6 +18,7 @@ public class Voiture : MonoBehaviour
     {
         position_checkpoint = transform.position;
         position_start = transform.position;
+        GetComponent<Rigidbody>().centerOfMass = new Vector3(0f, -0.9f, 0.2f);
     }
 
     // Update is called once per frame
@@ -46,7 +47,7 @@ public class Voiture : MonoBehaviour
             {
                 Speed = 20;
             }
-            r.AddForce(GetComponent<Transform>().forward * Speed);
+            r.AddForce(GetComponent<Transform>().forward * Speed *1500);
         }
         else if ((Input.GetKey(KeyCode.DownArrow)) || (Input.GetKey(KeyCode.S)))
         {
@@ -70,7 +71,7 @@ public class Voiture : MonoBehaviour
                 timer_acceleration = 0;
                 Speed = -20;
             }
-            r.AddForce(GetComponent<Transform>().forward * Speed);
+            r.AddForce(GetComponent<Transform>().forward * Speed *1500);
         }
  /*       else if (Input.GetKeyDown(KeyCode.Space))
         {

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Checkpoint2 : MonoBehaviour
 {
-    private Voiture voiture;
+    private Cars voiture;
     private bool checkpoint_valide;
-
+    public int test;
     // Start is called before the first frame update
     void Start()
     {
-        voiture = GameObject.FindGameObjectWithTag("Voiture").GetComponent<Voiture>();
+        voiture = GameObject.FindGameObjectWithTag("Voiture").GetComponent<Cars>();
     }
 
     // Update is called once per frame
@@ -19,7 +19,8 @@ public class Checkpoint2 : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        //test = 15;
+        test = 15;
+
         if (other.gameObject.tag == "Voiture"){
             checkpoint_valide = false;
             foreach(Vector3 chekpoint in voiture.list_checkpoint)
@@ -33,6 +34,7 @@ public class Checkpoint2 : MonoBehaviour
             {
                 voiture.position_checkpoint = transform.position;
                 voiture.list_checkpoint.Add(transform.position);
+                voiture.TxtTime.text = "Salut";
             }
         }
     }
