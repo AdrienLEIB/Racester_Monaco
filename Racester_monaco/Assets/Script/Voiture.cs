@@ -9,7 +9,10 @@ public class Voiture : MonoBehaviour
     public Vector3 position_checkpoint;
     private Vector3 position_start;
     public List<Vector3> list_checkpoint;
-
+    public WheelCollider F_gauche; // roue avant G
+    public WheelCollider F_right; // roue avant D
+    public WheelCollider b_left; // roue arrière G
+    public WheelCollider b_right; // roue arrière D
     public float timer;
     public float timer_acceleration;
     public float timer_down;
@@ -26,16 +29,9 @@ public class Voiture : MonoBehaviour
     {
         timer += Time.deltaTime;
         Rigidbody r = GetComponent<Rigidbody>();
-        if ((Input.GetKey(KeyCode.RightArrow)) || (Input.GetKey(KeyCode.D)))
-        {
-            GetComponent<Transform>().Rotate(new Vector3(0, 1, 0));
-            r.AddForce(GetComponent<Transform>().forward * (Speed));
-        }
-        else if ((Input.GetKey(KeyCode.LeftArrow)) || (Input.GetKey(KeyCode.Q)))
-        {
-            GetComponent<Transform>().Rotate(new Vector3(0, -1, 0));
-        }
-        else if ((Input.GetKey(KeyCode.UpArrow)) || (Input.GetKey(KeyCode.Z)))
+        F_gauche.steerAngle = Input.GetAxis("Horizontal") * 50;
+        F_right.steerAngle = Input.GetAxis("Horizontal") * 50;
+        if ((Input.GetKey(KeyCode.UpArrow)) || (Input.GetKey(KeyCode.Z)))
         {
             //peed = 1;
             timer_acceleration += Time.deltaTime;

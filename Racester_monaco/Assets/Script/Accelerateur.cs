@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Accelerateur : MonoBehaviour
 {
-    private Voiture voiture;
-
+    private Cars voiture;
+    public float test;
     // Start is called before the first frame update
     void Start()
     {
-        voiture = GameObject.FindGameObjectWithTag("Voiture").GetComponent<Voiture>();
+        voiture = GameObject.FindGameObjectWithTag("Voiture").GetComponent<Cars>();
     }
 
     // Update is called once per frame
@@ -21,7 +21,16 @@ public class Accelerateur : MonoBehaviour
         //test = 15;
         if (other.gameObject.tag == "Voiture")
         {
-            other.gameObject.GetComponent<Rigidbody>().AddForce(other.GetComponent<Transform>().forward * 200);
+            test = 150;
+            if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
+            {
+                other.gameObject.GetComponent<Rigidbody>().AddForce(-GetComponent<Transform>().forward * 650000);
+            }
+            else
+            {
+                other.gameObject.GetComponent<Rigidbody>().AddForce(GetComponent<Transform>().forward * 650000);
+            }
+                
         }
     }
 }

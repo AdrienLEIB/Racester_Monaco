@@ -34,7 +34,6 @@ public class Checkpoint2 : MonoBehaviour
             {
                 voiture.position_checkpoint = transform.position;
                 voiture.list_checkpoint.Add(transform.position);
-                voiture.TxtTime.text = "Salut";
             }
         }
     }
