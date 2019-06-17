@@ -151,7 +151,15 @@ public class Cars : MonoBehaviour
                 minute = 0;
                 seconde = 0;
                 r.velocity = Vector3.zero;
-            
+                timer = 0;
+                while (list_checkpoint.Count > 0)
+                {
+                    list_checkpoint.RemoveAt(list_checkpoint.Count -1);
+                }
+                while (list_temps_checkpoint.Count > 0)
+                {
+                    list_temps_checkpoint.RemoveAt(list_temps_checkpoint.Count - 1);
+                }
             }
         }
         else
