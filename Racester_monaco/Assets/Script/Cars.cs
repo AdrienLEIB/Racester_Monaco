@@ -1,13 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Cars : MonoBehaviour
 {
-    public float test_v;
     public Text TxtSpeed;
     public Text TxtTime;
+    public Text DiffTime;
+    public Text Record;
     public WheelCollider F_gauche; // roue avant G
     public WheelCollider F_right; // roue avant D
     public WheelCollider b_left; // roue arrière G
@@ -22,8 +25,11 @@ public class Cars : MonoBehaviour
     public Vector3 position_checkpoint;
     public Vector3 position_start;
     public List<Vector3> list_checkpoint;
+    public List<float> list_temps_checkpoint;
+    public List<float> tab;
+
     public Rigidbody r;
-    public float timer_acceleration;
+    public float timer;
     public bool RoueLibre;
     public StartPoint depart;
 
@@ -39,7 +45,6 @@ public class Cars : MonoBehaviour
         depart =  GameObject.FindGameObjectWithTag("StartPoint").GetComponent<StartPoint>();
         position_start = depart.transform.position;
         transform.position = position_start;
-        test_v = depart.testc;
         transform.rotation = Quaternion.Euler(0, 0, 0);
         minute = 0;
     }
@@ -48,7 +53,7 @@ public class Cars : MonoBehaviour
     {
         
         seconde += Time.deltaTime;
-
+        timer += Time.deltaTime;
         if (seconde > 60)
         {
             minute = minute + 1;
@@ -58,6 +63,27 @@ public class Cars : MonoBehaviour
         Speed = r.velocity.magnitude * 3.6f; // Vitesse de l'objet exprimé en KM/H
         TxtSpeed.text = "Vitesse en KM/H : " + (int)Speed;
         TxtTime.text = "Temps(s) : " + Timer;
+
+        string m_Path = Application.dataPath;
+        if (File.Exists(m_Path + @"\Save\load_temps.txt"))
+        {
+            using (StreamReader sr = new StreamReader(m_Path + @"\Save\load_temps.txt"))
+            {
+                string l1;
+                sr.ReadLine();
+                //float[] tab = new float[voiture.list_temps_checkpoint.Count];
+
+                while ((l1 = sr.ReadLine()) != null)
+                {
+                    tab.Add(float.Parse(l1));   
+                }
+                Record.text = "Record : " + tab[0].ToString() + ":" + tab[1].ToString();
+            }
+        }
+            else{
+            Record.text = " Record : not known";
+            }
+
 
         if (!RoueLibre) {
             // Cette partie a été inspiré du tuto youtube : https://www.youtube.com/watch?v=9aFFNgQ1aRA
@@ -109,6 +135,7 @@ public class Cars : MonoBehaviour
                 }
             
             }
+            // Fin de la partie inspiré du tuto
            if (Input.GetKey(KeyCode.Backspace))
             {
                 transform.rotation = Quaternion.Euler(0, 0, 0);
@@ -134,6 +161,7 @@ public class Cars : MonoBehaviour
             b_left.brakeTorque = Acceleration;
             b_right.brakeTorque = Acceleration;
         }
+        // Rotate le véhicule à partir des roues
         F_gauche.steerAngle = Input.GetAxis("Horizontal") * WheelAngleMax;
         F_right.steerAngle = Input.GetAxis("Horizontal") * WheelAngleMax;
     }
